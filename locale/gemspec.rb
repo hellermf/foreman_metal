@@ -1,2 +1,2 @@
 # Matches foreman_metal.gemspec
-_('TODO: Description of ForemanPluginTemplate.')
+_('Foreman compute resource provider interface for bare metal...particularly for IPMI KVM/SOL via VNC console.')
