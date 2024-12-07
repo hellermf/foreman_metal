@@ -23,6 +23,9 @@ module ForemanPluginTemplate
         # Add Global files for extending foreman-core components and routes
         register_global_js_file 'global'
 
+        # Register bare metal compute resource in foreman
+        compute_resource ForemanMetal::Metal
+
         # Add permissions
         security_block :foreman_metal do
           permission :view_foreman_metal, { :'foreman_metal/example' => [:new_action],
