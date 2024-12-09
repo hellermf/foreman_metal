@@ -1,0 +1,9 @@
+<%# Partial template called from foreman/app/views/compute_resources/show.html.erb
+appends to a two column table (property, value) describing an instance of this compute resource plugin %>
+
+<tr>
+  <td><%= _("Foo") %></td>
+  <td><%= @compute_resource.provider %></td>
+  <td><%= _("Wrapper") %></td>
+  <td><%= @compute_resource.wrapper.presence || '(none)' %></td>
+</tr>

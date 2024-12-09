@@ -1,0 +1,5 @@
+<%# Partial template called from foreman/app/views/compute_resources/_form.html.erb
+  appends to the form for creating a new compute resource instance
+see foreman/app/helpers/form_helper.rb for foreman form element definitions %>
+
+<%= text_f f, :wrapper , :label => _('Wrapper script'), :help_block => _("e.g. default-local.sh or proxy-via-X.sh") %>
