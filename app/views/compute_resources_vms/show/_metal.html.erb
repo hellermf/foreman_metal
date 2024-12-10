@@ -1,0 +1,18 @@
+<% title @vm.name unless @vm.nil? %>
+<div class='span12'>
+  <table class="table table-bordered table-striped">
+    <tr>
+      <th colspan="2"><%=_('Properties') %></th>
+    </tr>
+    <% unless @vm.nil? %>
+      <tr>
+        <td><%= _('Name') %></td>
+        <td><%= @vm.name %></td>
+      </tr>
+      <tr>
+        <td><%= _('TO-DO') %></td>
+        <td>TODO</td>
+      </tr>
+    <% end %>
+  </table>
+</div>

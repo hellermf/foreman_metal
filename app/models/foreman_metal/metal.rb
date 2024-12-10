@@ -19,5 +19,15 @@ module ForemanMetal
     def self.model_name
       ComputeResource.model_name
     end
+
+    def vms(opts = {})
+      vms = []
+      # TODO
+      ForemanMetal:Vms.new(vms)
+    end
+
+    def associated_host(vm)
+      associate_by('mac', vm.mac)
+    end
   end
 end
