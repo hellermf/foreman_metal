@@ -23,7 +23,7 @@ module ForemanMetal
     def vms(opts = {})
       vms = []
       # TODO
-      ForemanMetal:Vms.new(vms)
+      ForemanMetal::Vms.new(vms)
     end
 
     def associated_host(vm)
