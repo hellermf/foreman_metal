@@ -28,7 +28,7 @@ module ForemanMetal
     end
 
     def vms(opts = {})
-      vms = []
+      vms = Array.new
       vms.concat(@fakevms)
       # TODO
       ForemanMetal::Vms.new(vms)
