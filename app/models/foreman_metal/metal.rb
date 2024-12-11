@@ -28,10 +28,8 @@ module ForemanMetal
     end
 
     def vms(opts = {})
-      vms = Array.new
-      vms.concat(@fakevms)
       # TODO
-      ForemanMetal::Vms.new(vms)
+      ForemanMetal::Vms.new(@fakevms)
     end
 
     def associated_host(vm)
