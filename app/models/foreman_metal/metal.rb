@@ -22,8 +22,8 @@ module ForemanMetal
 
     def initialize
       @fakevms = []
-      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "11:22:33:44:55:66")
-      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "33:44:55:66:77:88")
+      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "22:33:44:55:66:77")
+      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "44:55:66:77:88:99")
       @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
       Foreman::Logging.logger('foreman_metal').debug "Initializing with #{@fakevms.length()} fakevms"
     end
@@ -31,8 +31,8 @@ module ForemanMetal
     def vms(opts = {})
       # TODO
       @fakevms = []
-      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "11:22:33:44:55:66")
-      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "33:44:55:66:77:88")
+      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "22:33:44:55:66:77")
+      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "44:55:66:77:88:99")
       @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
       Foreman::Logging.logger('foreman_metal').debug "Returning #{@fakevms.length()} fakevms"
       ForemanMetal::Vms.new(@fakevms)
@@ -45,8 +45,8 @@ module ForemanMetal
     def find_vm_by_uuid(uuid)
       vm = nil
       @fakevms = []
-      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "11:22:33:44:55:66")
-      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "33:44:55:66:77:88")
+      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "22:33:44:55:66:77")
+      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "44:55:66:77:88:99")
       @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
       Foreman::Logging.logger('foreman_metal').debug "Looking for VM with UUID #{uuid}..."
       @fakevms.each do |fake|
