@@ -20,8 +20,16 @@ module ForemanMetal
       ComputeResource.model_name
     end
 
+    def initialize
+      @fakevms = []
+      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "11:22:33:44:55:66")
+      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "33:44:55:66:77:88")
+      @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
+    end
+
     def vms(opts = {})
       vms = []
+      vms.concat(@fakevms)
       # TODO
       ForemanMetal::Vms.new(vms)
     end
