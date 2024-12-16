@@ -11,6 +11,7 @@
     <th><%= _('Name') -%></th>
     <th><%= _('ID') -%></th>
     <th><%= _('Type') -%></th>
+    <th><%= _('IPMI-IPv4') -%></th>
     <th><%= _('Power') -%></th>
     <th></th>
   </tr>
@@ -20,7 +21,8 @@
       <tr>
         <td><%= link_to_if_authorized vm.name, hash_for_compute_resource_vm_path(:compute_resource_id => @compute_resource, :id => vm.unique_cluster_identity(@compute_resource)) %></td>
         <td><%= vm.node_id %></td>
-        <td>IPMI-SOL</td>
+	<td>IPMI-SOL</td>
+        <td><%= vm.ip %></td>
         <td> <span <%= vm_power_class(vm.ready?) %>> <%= vm_state(vm) %></span> </td>
         <td>
         <%= action_buttons(

@@ -1,11 +1,11 @@
 module ForemanMetal
   class FakeVM
-    attr_accessor :name, :node_id, :mac
+    attr_accessor :name, :node_id, :ip
 
-    def initialize(name, node_id, mac)
+    def initialize(name, node_id, ipv4)
       @name = name
       @node_id = node_id
-      @mac = mac
+      @ip = ipv4
     end
 
     def unique_cluster_identity(compute_resource)

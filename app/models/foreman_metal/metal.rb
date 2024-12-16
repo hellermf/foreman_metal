@@ -20,36 +20,51 @@ module ForemanMetal
       ComputeResource.model_name
     end
 
+    def fakevms
+      if @fakevms_ts && (elapsed = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - @fakevms_ts)) < 6000
+        Foreman::Logging.logger('foreman_metal').debug "Returning cached info on #{@fakevms.length()} fakevms that is #{elapsed} seconds old"
+      else
+	@fakevms_ts = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        file = File.open "/usr/share/foreman/tmp/ipmi-inventory.json"
+        ipmi = JSON.load file
+        file.close
+        x=0
+        @fakevms = []
+        ipmi.each do |i|
+  	  @fakevms << ForemanMetal::FakeVM.new(i["name"], x += 1, i["ip"])
+	end
+        Foreman::Logging.logger('foreman_metal').debug "loaded info on #{fakevms.length()} fakevms from /usr/share/foreman/tmp/ipmi-inventory.json"
+      end
+      @fakevms
+    end
+
     def initialize
-      @fakevms = []
-      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "22:33:44:55:66:77")
-      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "44:55:66:77:88:99")
-      @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
-      Foreman::Logging.logger('foreman_metal').debug "Initializing with #{@fakevms.length()} fakevms"
+      Foreman::Logging.logger('foreman_metal').debug "ForemanMetal::Metal initialize was called!"
     end
 
     def vms(opts = {})
-      # TODO
-      @fakevms = []
-      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "22:33:44:55:66:77")
-      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "44:55:66:77:88:99")
-      @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
-      Foreman::Logging.logger('foreman_metal').debug "Returning #{@fakevms.length()} fakevms"
-      ForemanMetal::Vms.new(@fakevms)
+      Foreman::Logging.logger('foreman_metal').debug "Returning #{fakevms.length()} fakevms"
+      ForemanMetal::Vms.new(fakevms)
+    end
+
+    def associate_by(name, attributes)
+      Foreman::Logging.logger('foreman_metal').debug "Trying to associate (fake)VM w/ #{name}=#{attributes} to a Foreman host profile"
+      attributes = Array.wrap(attributes).map { |mac| Net::Validations.normalize_mac(mac) } if name == 'mac'
+      Host.authorized(:view_hosts, Host).joins(:interfaces).
+        where(ActiveRecord::Base.sanitize_sql("nics.#{name}") => attributes).
+	where("nics.type" => "Nic::BMC").
+        readonly(false).
+        first
     end
 
     def associated_host(vm)
-      associate_by('mac', vm.mac)
+      associate_by('ip', vm.ip)
     end
 
     def find_vm_by_uuid(uuid)
       vm = nil
-      @fakevms = []
-      @fakevms << ForemanMetal::FakeVM.new("fake-one", 7, "22:33:44:55:66:77")
-      @fakevms << ForemanMetal::FakeVM.new("fake-two", 42, "44:55:66:77:88:99")
-      @fakevms << ForemanMetal::FakeVM.new("fake-1601", 1601, "2c:ea:7f:db:04:67")
       Foreman::Logging.logger('foreman_metal').debug "Looking for VM with UUID #{uuid}..."
-      @fakevms.each do |fake|
+      fakevms.each do |fake|
 	Foreman::Logging.logger('foreman_metal').debug "looking at #{fake.identity}"
 	if fake.identity == uuid.split('_')[-1]
 	  vm = fake
